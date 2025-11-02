@@ -5,11 +5,11 @@ import 'package:share_memo_flutter/models/memo_model.dart';
 
 class MemoApi {
   // エンドポイント後で変更
-  static const String baseUrl = 'http://10.0.2.2:8000/api/memo/';
+  static const String baseUrl = 'http://10.0.2.2:8000/api';
 
-  // メモ一覧の取得（GET: /api/memo）
+  // メモ一覧の取得（GET: /api/get-memo）
   Future<List<dynamic>> getMemos() async {
-    final response = await http.get(Uri.parse('$baseUrl'));
+    final response = await http.get(Uri.parse('$baseUrl/get-memo'));
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body) as List<dynamic>;
@@ -18,10 +18,10 @@ class MemoApi {
     }
   }
 
-  // メモの新規作成（POST: /api/memo）
+  // メモの新規作成（POST: /api/create-memo）
   Future<MemoModel> createMemo(Map<String, dynamic> json) async {
     final response = await http.post(
-      Uri.parse('$baseUrl'),
+      Uri.parse('$baseUrl/create-memo'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(json),
     );

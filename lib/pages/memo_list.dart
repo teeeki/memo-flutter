@@ -21,13 +21,14 @@ class _MemoListPageState extends State<MemoListPage> {
   @override
   void initState() {
     super.initState();
-    createMemos();
+    // createMemos(); // サンプルメモ作成
+    fetchMemos(); // メモ一覧の取得
   }
 
   Future<void> createMemos() async {
     final MemoModel sampleData = MemoModel(
       title: "サンプルメモ",
-      user: "test_user",
+      username: "test_user",
       summary: "これはサンプルメモの概要です。",
       content: "これはサンプルメモの内容です。",
     );
@@ -36,11 +37,23 @@ class _MemoListPageState extends State<MemoListPage> {
       final MemoModel memo = await memoRepository.createMemo(sampleData);
       debugPrint('メモの作成に成功しました');
       debugPrint('作成されたメモ: ${memo.title}');
-      debugPrint('ユーザ: ${memo.user}');
+      debugPrint('ユーザ: ${memo.username}');
       debugPrint('概要: ${memo.summary}');
       setState(() {
         memos.add(memo);
       });
+    } catch (e) {
+      debugPrint('Error: $e');
+    }
+  }
+
+  void fetchMemos() async {
+    try {
+      final List<MemoModel> fetchedMemos = await memoRepository.getMemos();
+      setState(() {
+        memos = fetchedMemos;
+      });
+      debugPrint('メモの取得に成功しました。件数: ${memos.length}');
     } catch (e) {
       debugPrint('Error: $e');
     }
@@ -108,7 +121,7 @@ class _MemoListPageState extends State<MemoListPage> {
                     Icon(Icons.person, size: 16, color: Colors.grey),
                     SizedBox(width: 8),
                     Text(
-                      '${memo.user}',
+                      '${memo.username}',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w200,
