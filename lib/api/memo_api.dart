@@ -7,9 +7,9 @@ class MemoApi {
   // エンドポイント後で変更
   static const String baseUrl = 'http://10.0.2.2:8000/api';
 
-  // メモ一覧の取得（GET: /api/get-memo）
+  // メモ一覧の取得（GET: /api/get-memos）
   Future<List<dynamic>> getMemos() async {
-    final response = await http.get(Uri.parse('$baseUrl/get-memo'));
+    final response = await http.get(Uri.parse('$baseUrl/get-memos'));
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body) as List<dynamic>;

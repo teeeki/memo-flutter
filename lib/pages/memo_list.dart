@@ -27,8 +27,8 @@ class _MemoListPageState extends State<MemoListPage> {
 
   Future<void> createMemos() async {
     final MemoModel sampleData = MemoModel(
-      title: "サンプルメモ",
       username: "test_user",
+      title: "サンプルメモ",
       summary: "これはサンプルメモの概要です。",
       content: "これはサンプルメモの内容です。",
     );
